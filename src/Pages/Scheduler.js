@@ -1,68 +1,162 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import Weeks from './Weeks.js'
-import Days from './Days.js'
+import dateFns from "date-fns"
+// Moment.js Information
+// import Weeks from './Weeks.js'
+// import Days from './Days.js'
 
 export default class Scheduler extends Component {
 
+    state = {
+        currentMonth: new Date(),
+        selectedDate: new Date()
+    };
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            month: this.props.selected.clone()
-        };
+    renderHeader() {
+        const dateFormat = "MMMM YYYY";
+
+        return (
+            <div className="header row flex-middle">
+                <div className="col col-start">
+                    <div className="icon" onClick={this.prevMonth}>
+                        chevron_left
+              </div>
+                </div>
+                <div className="col col-center">
+                    <span>{dateFns.format(this.state.currentMonth, dateFormat)}</span>
+                </div>
+                <div className="col col-end" onClick={this.nextMonth}>
+                    <div className="icon">chevron_right</div>
+                </div>
+            </div>
+        );
     }
 
-    previous() {
-        let month = this.state.month;
-        month.add(-1, "M");
-        this.setState({ month: month });
-    }
+    renderDays() {
+        const dateFormat = "ddd";
+        const days = [];
 
-    next() {
-        let month = this.state.month;
-        month.add(1, "M");
-        this.setState({ month: month });
-    }
+        let startDate = dateFns.startOfWeek(this.state.currentMonth);
 
-    select(day) {
-        this.props.selected = day.date;
-        this.forceUpdate();
-    }
-
-
-    renderWeeks() {
-        let weeks = [],
-            done = false,
-            date = this.state.month.clone().startOf("month").add("w" - 1).day("Sunday"),
-            monthIndex = date.month(),
-            count = 0;
-
-        while (!done) {
-            weeks.push(<Weeks key={date.toString()} date={date.clone()} month={this.state.month} select={this.select} selected={this.props.selected} />);
-            date.add(1, "w");
-            done = count++ > 2 && monthIndex !== date.month();
-            monthIndex = date.month();
+        for (let i = 0; i < 7; i++) {
+            days.push(
+                <div className="col col-center" key={i}>
+                    {dateFns.format(dateFns.addDays(startDate, i), dateFormat)}
+                </div>
+            );
         }
 
-        return weeks;
+        return <div className="days row">{days}</div>;
     }
 
+    renderCells() {
+        const { currentMonth, selectedDate } = this.state;
+        const monthStart = dateFns.startOfMonth(currentMonth);
+        const monthEnd = dateFns.endOfMonth(monthStart);
+        const startDate = dateFns.startOfWeek(monthStart);
+        const endDate = dateFns.endOfWeek(monthEnd);
 
-    renderMonthLabel() {
-        return <span>{this.state.month.format("MMMM, YYYY")}</span>;
+        const dateFormat = "D";
+        const rows = [];
+
+        let days = [];
+        let day = startDate;
+        let formattedDate = "";
+
+        while (day <= endDate) {
+            for (let i = 0; i < 7; i++) {
+                formattedDate = dateFns.format(day, dateFormat);
+                const cloneDay = day;
+                days.push(
+                    <div
+                        className={`col cell ${
+                            !dateFns.isSameMonth(day, monthStart)
+                                ? "disabled"
+                                : dateFns.isSameDay(day, selectedDate) ? "selected" : ""
+                            }`}
+                        key={day}
+                        onClick={() => this.onDateClick(dateFns.parse(cloneDay))}
+                    >
+                        <span className="number">{formattedDate}</span>
+                        {/* <span className="bg">{formattedDate}</span> */}
+                    </div>
+                );
+                day = dateFns.addDays(day, 1);
+            }
+            rows.push(
+                <div className="row" key={day}>
+                    {days}
+                </div>
+            );
+            days = [];
+        }
+        return <div className="body">{rows}</div>;
     }
+
+    onDateClick = day => {
+        this.setState({
+            selectedDate: day
+        });
+    };
+
+    nextMonth = () => {
+        this.setState({
+            currentMonth: dateFns.addMonths(this.state.currentMonth, 1)
+        });
+    };
+
+    prevMonth = () => {
+        this.setState({
+            currentMonth: dateFns.subMonths(this.state.currentMonth, 1)
+        });
+    };
 
     render() {
         return (
             <div>
-                <div className="header">
-                    <i className="fa fa-angle-left" onClick={this.previous}></i>
-                    {this.renderMonthLabel()}
-                    <i className="fa fa-angle-right" onClick={this.next}></i>
-                </div>
-                <Days />
-                {this.renderWeeks()}
+                <section className="schedualing">
+                    <h1 className="schedTitle">Schedule Appointment</h1>
+                    <div className="calContainer">
+                    <div className="calendar">
+                        {this.renderHeader()}
+                        {this.renderDays()}
+                        {this.renderCells()}
+                    </div>
+                    </div>
+
+                </section>
+
+
+                <section className="requestDate">
+                    <h1 className="reqTitle">Request Date</h1>
+                    <form className="reqForm" method="post" action="/server, or http://server.com">
+                        <lable className="name">
+                            <input id="nameInput" type="text" required />
+                            : Name
+                        </lable>
+
+                        <lable className="phone">
+                            <input id="phoneInput" type="number" required />
+                            : Name
+                        </lable>
+
+                        <lable className="email">
+                            <input id="emailInput" type="email" required />
+                            : Contact Email
+                        </lable>
+
+                        <lable className="date">
+                            <input className="dateInput" required />
+                            : Date Requested
+                        </lable>
+
+                        <textarea className="commentBox" placeholder="Comments/Notes" />
+
+                        <input className="btn" type="submit" value="Submit Request" />
+
+                    </form>
+                </section>
+
 
                 <div className='link appointLink'>
                     <Link to="/appointments">Administrator Login</Link>
