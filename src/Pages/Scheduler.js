@@ -9,8 +9,16 @@ export default class Scheduler extends Component {
 
     state = {
         currentMonth: new Date(),
-        selectedDate: new Date()
+        selectedDate: new Date(),
+        name: '',
+        phone: '',
+        email: '',
+        date: '',
+        notes: ''
+
     };
+
+    //calendar logic/arguments
 
     renderHeader() {
         const dateFormat = "MMMM YYYY";
@@ -111,17 +119,66 @@ export default class Scheduler extends Component {
         });
     };
 
+    //Form Logic/arguments
+
+    handleOnChange = (event) => {
+        if (event.taget.id === "nameInput") {
+            this.setState({
+                newAppointmentName: event.target.value
+            })
+        } else if (event.target.if === "phoneInput") {
+            this.setState({
+                newAppointmentPhone: event.target.value
+            })
+        } else if (event.taget.id === "emailInput") {
+            this.setState({
+                newAppointmentEmail: event.target.value
+            })
+        } else if (event.taget.id === "dateInput") {
+            this.setState({
+                newAppointmentDate: event.target.value
+            })
+        } else if (event.taget.id === "commentInput") {
+            this.setState({
+                newAppointmentComment: event.target.value
+            })
+        }
+
+    }
+
+    handleOnClick = () => {
+        this.props.createAppointmentRequest({
+            name: this.state.newAppointmentName,
+            phone: this.state.newAppointmentPhone,
+            email: this.state.newAppointmentEmail,
+            date: this.state.newAppointmentDate,
+            notes: this.state.newAppointmentComment
+        })
+    }
+
     render() {
         return (
             <div>
-                <section className="schedualing">
+                <section className="sched">
                     <h1 className="schedTitle">Schedule Appointment</h1>
+                    <p>Check date availability on calendar, find available date, then request sevice on chosen date with form below.</p>
                     <div className="calContainer">
-                    <div className="calendar">
-                        {this.renderHeader()}
-                        {this.renderDays()}
-                        {this.renderCells()}
+                        <div className="calendar">
+                            {this.renderHeader()}
+                            {this.renderDays()}
+                            {this.renderCells()}
+                        </div>
                     </div>
+
+                    <div className="key">
+                        <div className="avShape"></div>
+                        <h3>Available</h3>
+                        <div className="reqShape"></div>
+                        <h3>Requested</h3>
+                        <div className="resShape"></div>
+                        <h3>Reserved</h3>
+                        <div className="unShape"></div>
+                        <h3>Unavailable</h3>
                     </div>
 
                 </section>
@@ -129,30 +186,35 @@ export default class Scheduler extends Component {
 
                 <section className="requestDate">
                     <h1 className="reqTitle">Request Date</h1>
+
                     <form className="reqForm" method="post" action="/server, or http://server.com">
-                        <lable className="name">
-                            <input id="nameInput" type="text" required />
-                            : Name
+                        <div className="formFlex">
+                            <lable className="name">
+                                <input id="nameInput" type="text" required />
+                                : Name
                         </lable>
 
-                        <lable className="phone">
-                            <input id="phoneInput" type="number" required />
-                            : Name
+                            <lable className="phone">
+                                <input id="phoneInput" type="number" required />
+                                : Phone
                         </lable>
 
-                        <lable className="email">
-                            <input id="emailInput" type="email" required />
-                            : Contact Email
+                            <lable className="email">
+                                <input id="emailInput" type="email" required />
+                                : Email
                         </lable>
 
-                        <lable className="date">
-                            <input className="dateInput" required />
-                            : Date Requested
+                            <lable className="date">
+                                <input className="dateInput" required />
+                                : Date Requested
                         </lable>
+                        </div>
 
-                        <textarea className="commentBox" placeholder="Comments/Notes" />
-
-                        <input className="btn" type="submit" value="Submit Request" />
+                        <div className="commentBoxFlex">
+                            <textarea className="commentBox" placeholder="Comments/Notes" />
+                        </div>
+                        
+                        <input className="btn" onClick={this.handleOnClick} type="submit" value="Submit Request" />
 
                     </form>
                 </section>

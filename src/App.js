@@ -5,6 +5,22 @@ import Appointments from './Pages/Appointments'
 import './css/App.css'
 
 class App extends Component {
+state = {
+  appointment: []
+}
+
+createAppointmentRequest = (schedule) => {
+  this.setState((prev) => {
+    const existingAppointments = prev.appointment
+    existingAppointments.push(schedule)
+
+    return {
+      shows:existingAppointments
+    }
+  })
+}
+
+
   render() {
     return (
       <Router>
