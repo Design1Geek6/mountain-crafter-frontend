@@ -282,7 +282,7 @@ main {
   margin: 5px;
 }
 
-.formFlex{
+.scheduleFormFlex{
   display: flex;
   justify-content: center;
 }
@@ -298,6 +298,7 @@ textarea{
 }
 
 .commentBox{
+  padding-left: 5px;
   margin-top: 20px;
   width: 50%;
   height: 200px;

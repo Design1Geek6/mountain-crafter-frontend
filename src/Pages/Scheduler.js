@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import dateFns from "date-fns"
-// Moment.js Information
-// import Weeks from './Weeks.js'
-// import Days from './Days.js'
+import Select from '../Form/Select'
 
 export default class Scheduler extends Component {
 
@@ -156,6 +154,10 @@ export default class Scheduler extends Component {
         })
     }
 
+    handleAgeRangeSelect(e) {  
+        this.setState({ ownerAgeRangeSelection: e.target.value });
+      }
+
     render() {
         return (
             <div>
@@ -188,32 +190,26 @@ export default class Scheduler extends Component {
                     <h1 className="reqTitle">Request Date</h1>
 
                     <form className="reqForm" method="post" action="/server, or http://server.com">
-                        <div className="formFlex">
-                            <lable className="name">
-                                <input id="nameInput" type="text" required />
-                                : Name
-                        </lable>
-
-                            <lable className="phone">
-                                <input id="phoneInput" type="number" required />
-                                : Phone
-                        </lable>
-
-                            <lable className="email">
-                                <input id="emailInput" type="email" required />
-                                : Email
-                        </lable>
-
-                            <lable className="date">
-                                <input className="dateInput" required />
-                                : Date Requested
-                        </lable>
+                        <div className="scheduleFormFlex">
+                            <lable className="name"> <input id="nameInput" type="text" required />: Name </lable>
+                            <lable className="phone"><input id="phoneInput" type="number" required /> : Phone </lable>
+                            <lable className="email"><input id="emailInput" type="email" required />: Email </lable>
+                            <lable className="date"><input className="dateInput" required /> : Date Requested </lable>
+                            <div className="selectionFlex">
+                                <lable className="aofl"><input type="radio" required /> : Arrow Of Light</lable>
+                                <lable className="mmDemo"><input type="radio" required /> : Mountian Man Demo </lable>
+                                <Select
+                                    name={'ageRange'}
+                                    placeholder={'Choose your age range'}
+                                    controlFunc={this.handleAgeRangeSelect}
+                                    options={this.state.ageOptions}
+                                    selectedOption={this.state.ownerAgeRangeSelection} />
+                            </div>
                         </div>
-
                         <div className="commentBoxFlex">
                             <textarea className="commentBox" placeholder="Comments/Notes" />
                         </div>
-                        
+
                         <input className="btn" onClick={this.handleOnClick} type="submit" value="Submit Request" />
 
                     </form>
