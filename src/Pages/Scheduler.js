@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import dateFns from "date-fns"
 import Select from '../Form/Select'
 
@@ -12,7 +12,9 @@ export default class Scheduler extends Component {
         phone: '',
         email: '',
         date: '',
-        notes: ''
+        notes: '',
+        password: '',
+        redirect: false
 
     };
 
@@ -154,11 +156,21 @@ export default class Scheduler extends Component {
         })
     }
 
-    handleAgeRangeSelect(e) {  
-        this.setState({ ownerAgeRangeSelection: e.target.value });
-      }
+    validatePass = ()=> {
+        if(this.state.password === '1'){
+            // return <Redirect to="/Appointments" />
+            return this.setState({redirect: true})
+        }else{
+            alert('Invalid Password');
+            return false;
+        }
+    }
 
     render() {
+        const { redirect } = this.state
+        if(redirect){
+            return <Redirect to="/Appointments" />
+        }
         return (
             <div>
                 <section className="sched">
@@ -196,17 +208,16 @@ export default class Scheduler extends Component {
                             <lable className="email"><input id="emailInput" type="email" required />: Email </lable>
                             <lable className="date"><input className="dateInput" required /> : Date Requested </lable>
                             <div className="selectionFlex">
-                                <lable className="aofl"><input type="radio" required /> : Arrow Of Light</lable>
-                                <lable className="mmDemo"><input type="radio" required /> : Mountian Man Demo </lable>
-                                <Select
-                                    name={'ageRange'}
-                                    placeholder={'Choose your age range'}
-                                    controlFunc={this.handleAgeRangeSelect}
-                                    options={this.state.ageOptions}
-                                    selectedOption={this.state.ownerAgeRangeSelection} />
+                                <lable className="mmDemo"><input type="checkbox" required /> : Mountian Man Demo </lable>
+                                <lable className="aofl"><input type="checkbox" required /> : Arrow Of Light</lable>
+                                <div className="selectQty">
+                                <Select /> <lable className="qtyLable">: Hand Made Arrows</lable>
+                                <Select /> <lable className="qtyLable">: Number of Boys</lable>
+                                </div>
                             </div>
                         </div>
                         <div className="commentBoxFlex">
+                        <p>{'(If ordering arrows, please type in the boys names in the comment box below, exactly as you want it on the arrows)'}</p>
                             <textarea className="commentBox" placeholder="Comments/Notes" />
                         </div>
 
@@ -217,7 +228,9 @@ export default class Scheduler extends Component {
 
 
                 <div className='link appointLink'>
-                    <Link to="/appointments">Administrator Login</Link>
+                    <lable>Administrator Login:<input id="password" type="password" onChange={(e)=>{
+                        this.setState({password:e.target.value} )
+                    }} /></lable><button onClick={this.validatePass}>ENTER</button>
                 </div>
             </div>
         )

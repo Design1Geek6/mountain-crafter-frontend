@@ -238,7 +238,7 @@ main {
 
 /* form and misc Styling*/
 
-.sched, .requestDate, .appointLink{
+.sched, .requestDate, .appointLink, .updateRequest{
   text-align: center;
 }
 
@@ -282,7 +282,7 @@ main {
   margin: 5px;
 }
 
-.scheduleFormFlex{
+.scheduleFormFlex, .appFormFlex{
   display: flex;
   justify-content: center;
 }
@@ -292,6 +292,16 @@ input{
   margin-right: 5px;
 }
 
+.qtyLable{
+  margin-left: 10px;
+  margin-right: 20px;
+}
+
+.selectQty{
+  display: flex;
+  justify-content: flex-end;
+}
+
 textarea{
   margin-left: 20px;
   padding: 0px;
@@ -299,7 +309,6 @@ textarea{
 
 .commentBox{
   padding-left: 5px;
-  margin-top: 20px;
   width: 50%;
   height: 200px;
 }
