@@ -122,45 +122,83 @@ export default class Scheduler extends Component {
     //Form Logic/arguments
 
     handleOnChange = (event) => {
-        if (event.taget.id === "nameInput") {
+        if (event.target.id === "nameInput") {
             this.setState({
                 newAppointmentName: event.target.value
             })
-        } else if (event.target.if === "phoneInput") {
+        } else if (event.target.id === "phoneInput") {
             this.setState({
                 newAppointmentPhone: event.target.value
             })
-        } else if (event.taget.id === "emailInput") {
+        } else if (event.target.id === "emailInput") {
             this.setState({
                 newAppointmentEmail: event.target.value
             })
-        } else if (event.taget.id === "dateInput") {
+        } else if (event.target.id === "dateInput") {
             this.setState({
                 newAppointmentDate: event.target.value
             })
-        } else if (event.taget.id === "commentInput") {
+        } else if (event.target.id === "mmdBox") {
+            this.setState({
+                newAppointmentMmd: event.target.value
+            })
+        } else if (event.target.id === "aoflBox") {
+            this.setState({
+                newAppointmentAofl: event.target.value
+            })
+        } else if (event.target.id === "arrowsQty") {
+            this.setState({
+                newAppointmentArrows: event.target.value
+            })
+        } else if (event.target.id === "boysQty") {
+            this.setState({
+                newAppointementBoys: event.target.value
+            })
+        } else if (event.target.id === "commentInput") {
             this.setState({
                 newAppointmentComment: event.target.value
             })
         }
-
     }
 
-    handleOnClick = () => {
-        this.props.createAppointmentRequest({
+    handleOnClick = (createAppointmentRequest) => {
+        this.createAppointmentRequest({
             name: this.state.newAppointmentName,
             phone: this.state.newAppointmentPhone,
             email: this.state.newAppointmentEmail,
             date: this.state.newAppointmentDate,
+            checkboxMmd: this.state.newAppointmentMmd,
+            checkBoxAofl: this.state.newAppointmentAofl,
+            selectArrowsQty: this.state.newAppointmentArrows,
+            selectBoysQty: this.state.newAppointementBoys,
             notes: this.state.newAppointmentComment
         })
     }
 
-    validatePass = ()=> {
-        if(this.state.password === '1'){
+    createAppointmentRequest = (appointmentToSave) => {
+        const postInit = {
+            method: 'post',
+            mode: 'cors',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(appointmentToSave)
+        }
+
+        fetch('http://localhost:3001/scheduleRequest', postInit)
+            .then((resp) => {
+                console.log(resp)
+            })
+        console.log('function hit')
+    }
+
+    // password logic
+
+    validatePass = () => {
+        if (this.state.password === '1') {
             // return <Redirect to="/Appointments" />
-            return this.setState({redirect: true})
-        }else{
+            return this.setState({ redirect: true })
+        } else {
             alert('Invalid Password');
             return false;
         }
@@ -168,14 +206,14 @@ export default class Scheduler extends Component {
 
     render() {
         const { redirect } = this.state
-        if(redirect){
+        if (redirect) {
             return <Redirect to="/Appointments" />
         }
         return (
             <div>
                 <section className="sched">
                     <h1 className="schedTitle">Schedule Appointment</h1>
-                    <p>Check date availability on calendar, find available date, then request sevice on chosen date with form below.</p>
+                    <p>Check date availability on calendar, find availabel date, then request sevice on chosen date with form below.</p>
                     <div className="calContainer">
                         <div className="calendar">
                             {this.renderHeader()}
@@ -186,13 +224,13 @@ export default class Scheduler extends Component {
 
                     <div className="key">
                         <div className="avShape"></div>
-                        <h3>Available</h3>
+                        <h3>Availabel</h3>
                         <div className="reqShape"></div>
                         <h3>Requested</h3>
                         <div className="resShape"></div>
                         <h3>Reserved</h3>
                         <div className="unShape"></div>
-                        <h3>Unavailable</h3>
+                        <h3>Unavailabel</h3>
                     </div>
 
                 </section>
@@ -203,21 +241,23 @@ export default class Scheduler extends Component {
 
                     <form className="reqForm" method="post" action="/server, or http://server.com">
                         <div className="scheduleFormFlex">
-                            <lable className="name"> <input id="nameInput" type="text" required />: Name </lable>
-                            <lable className="phone"><input id="phoneInput" type="number" required /> : Phone </lable>
-                            <lable className="email"><input id="emailInput" type="email" required />: Email </lable>
-                            <lable className="date"><input className="dateInput" required /> : Date Requested </lable>
+                            <div className="singleInputFlex">
+                                <label className="singleInput"> <input id="nameInput" type="text" required onChange={this.handleOnChange} />: Name </label>
+                                <label className="singleInput"><input id="phoneInput" type="tel" required onChange={this.handleOnChange} /> : Phone </label>
+                                <label className="singleInput"><input id="emailInput" type="email" required onChange={this.handleOnChange} />: Email </label>
+                                <label className="singleInput"><input className="dateInput" required onChange={this.handleOnChange} /> : Date Requested </label>
+                            </div>
                             <div className="selectionFlex">
-                                <lable className="mmDemo"><input type="checkbox" required /> : Mountian Man Demo </lable>
-                                <lable className="aofl"><input type="checkbox" required /> : Arrow Of Light</lable>
+                                <label className="mmDemo"><input id="mmdBox" type="checkbox" required onChange={this.handleOnChange} /> : Mountian Man Demo </label>
+                                <label className="aofl"><input id="aoflBox" type="checkbox" required onChange={this.handleOnChange} /> : Arrow Of Light</label>
                                 <div className="selectQty">
-                                <Select /> <lable className="qtyLable">: Hand Made Arrows</lable>
-                                <Select /> <lable className="qtyLable">: Number of Boys</lable>
+                                    <Select id="arrowsQty" onChange={this.handleOnChange} /> <label className="qtylabel">: Hand Made Arrows</label>
+                                    <Select id="boysQty" onChange={this.handleOnChange} /> <label className="qtylabel">: Number of Boys</label>
                                 </div>
                             </div>
                         </div>
                         <div className="commentBoxFlex">
-                        <p>{'(If ordering arrows, please type in the boys names in the comment box below, exactly as you want it on the arrows)'}</p>
+                            <p>{'(If ordering arrows, please type in the boys names in the comment box below, exactly as you want it on the arrows)'}</p>
                             <textarea className="commentBox" placeholder="Comments/Notes" />
                         </div>
 
@@ -228,9 +268,9 @@ export default class Scheduler extends Component {
 
 
                 <div className='link appointLink'>
-                    <lable>Administrator Login:<input id="password" type="password" onChange={(e)=>{
-                        this.setState({password:e.target.value} )
-                    }} /></lable><button onClick={this.validatePass}>ENTER</button>
+                    <label>Administrator Login:<input id="password" type="password" onChange={(e) => {
+                        this.setState({ password: e.target.value })
+                    }} /></label><button onClick={this.validatePass}>ENTER</button>
                 </div>
             </div>
         )

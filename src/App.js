@@ -9,16 +9,7 @@ state = {
   appointment: []
 }
 
-createAppointmentRequest = (schedule) => {
-  this.setState((prev) => {
-    const existingAppointments = prev.appointment
-    existingAppointments.push(schedule)
 
-    return {
-      shows:existingAppointments
-    }
-  })
-}
 
 
   render() {
@@ -26,8 +17,8 @@ createAppointmentRequest = (schedule) => {
       <Router>
         <div className="App">
           <Switch>
-            <Route exact path="/" component={() => <Scheduler />} />
-            <Route path="/appointments" component={() => <Appointments />} />
+            <Route exact path="/" component={Scheduler} />
+            <Route path="/appointments" component={Appointments} />
           </Switch>
         </div>
       </Router>
