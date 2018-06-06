@@ -31,7 +31,7 @@ app.post('/scheduleRequest', async (req, res) => {
         console.log('saved Appointment')
         res.send(savedAppointment)
     } catch (err) {
-        console.log('WronG', err)
+        console.log('OOPS! Somthing Went Wrong', err)
     }
 })
 

@@ -29,7 +29,7 @@ export default class Appointments extends Component {
                     <section className="updateRequest">
                         <h1>Request Details</h1>
 
-                        <form className="updateForm" method="post" action="/server, or http://server.com">
+                        <form className="updateForm">
                             <div className="appFormFlex">
                                 <div className="singleInputFlex">
                                     <label className="singleInput"> <input id="nameUpdate" type="text" required />: Name </label>
@@ -39,10 +39,14 @@ export default class Appointments extends Component {
                                 </div>
                                 <div className="selectionFlex">
                                     <label className="mmDemo"><input id="mmdBox" type="checkbox" required /> : Arrow Of Light</label>
-                                    <label className="aofl"><input id="aoflBox" type="checkbox" required /> : Mountian Man Demo </label>
-                                    <div className="selectQtyReq">
-                                        <Select id="arrowQty" /> <label className="qtylabel">: Hand Made Arrows</label>
-                                        <Select id="boysQty" /> <label className="qtylabel">: Number of Boys</label>
+                                    <label className="aofl"><input id="aoflBox" type="checkbox" required /> : Mountain Man Demo </label>
+                                    <div className="selectFlex">
+                                        <div className="selectQty">
+                                            <Select id="arrowQty" /> <label className="qtylabel">: Hand Made Arrows</label>
+                                        </div>
+                                        <div className="selectQty">
+                                            <Select id="boysQty" /> <label className="qtylabel">: Number of Boys</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

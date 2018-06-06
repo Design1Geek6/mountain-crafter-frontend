@@ -189,9 +189,9 @@ main {
   border-bottom: none;
 }
 
-.calendar .body .cell:last-child {
-  border-right: none;
-}
+/* .calendar .body .cell:last-child {
+  border-right: 5em;
+} */
 
 .calendar .body .cell .number {
   position: absolute;
@@ -292,21 +292,22 @@ input{
   margin-right: 5px;
 }
 
-.qtyLable{
+.qtylabel{
+  
   margin-left: 10px;
   margin-right: 20px;
 }
 
-/* .selectQty{
+.selectQty, .selectQtyReq{
   display: flex;
-  justify-content: flex-end;
-} */
-
-.selectQtyReq, .selectQty{
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-}
+  flex-direction: row;
+  justify-content: flex-start;
+  align-content: center;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 10px;
+  margin-top:10px;
+} 
 
 textarea{
   margin-left: 20px;

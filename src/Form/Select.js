@@ -15,7 +15,7 @@ export default class Select extends Component {
 
             return (
                 <div>
-                    <select name="">
+                    <select id={this.props.selectId} onChange={this.props.onChange} name="">
                         {theOptions}
                     </select>
                 </div>

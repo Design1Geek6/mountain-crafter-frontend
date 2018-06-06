@@ -8,11 +8,6 @@ export default class Scheduler extends Component {
     state = {
         currentMonth: new Date(),
         selectedDate: new Date(),
-        name: '',
-        phone: '',
-        email: '',
-        date: '',
-        notes: '',
         password: '',
         redirect: false
 
@@ -152,7 +147,7 @@ export default class Scheduler extends Component {
             })
         } else if (event.target.id === "boysQty") {
             this.setState({
-                newAppointementBoys: event.target.value
+                newAppointmentBoys: event.target.value
             })
         } else if (event.target.id === "commentInput") {
             this.setState({
@@ -170,9 +165,14 @@ export default class Scheduler extends Component {
             checkboxMmd: this.state.newAppointmentMmd,
             checkBoxAofl: this.state.newAppointmentAofl,
             selectArrowsQty: this.state.newAppointmentArrows,
-            selectBoysQty: this.state.newAppointementBoys,
+            selectBoysQty: this.state.newAppointmentBoys,
             notes: this.state.newAppointmentComment
         })
+    }
+
+    handleSubmit = (alertMsg) => {
+        alert( 'Schedule request has been receieved. We will contact you in the next couple of days. Thank you!')
+        
     }
 
     createAppointmentRequest = (appointmentToSave) => {
@@ -196,7 +196,6 @@ export default class Scheduler extends Component {
 
     validatePass = () => {
         if (this.state.password === '1') {
-            // return <Redirect to="/Appointments" />
             return this.setState({ redirect: true })
         } else {
             alert('Invalid Password');
@@ -224,13 +223,13 @@ export default class Scheduler extends Component {
 
                     <div className="key">
                         <div className="avShape"></div>
-                        <h3>Availabel</h3>
+                        <h3>Available</h3>
                         <div className="reqShape"></div>
                         <h3>Requested</h3>
                         <div className="resShape"></div>
                         <h3>Reserved</h3>
                         <div className="unShape"></div>
-                        <h3>Unavailabel</h3>
+                        <h3>Unavailable</h3>
                     </div>
 
                 </section>
@@ -239,26 +238,31 @@ export default class Scheduler extends Component {
                 <section className="requestDate">
                     <h1 className="reqTitle">Request Date</h1>
 
-                    <form className="reqForm" method="post" action="/server, or http://server.com">
+                    <form className="reqForm" onSubmit={this.handleSubmit}>
                         <div className="scheduleFormFlex">
                             <div className="singleInputFlex">
                                 <label className="singleInput"> <input id="nameInput" type="text" required onChange={this.handleOnChange} />: Name </label>
                                 <label className="singleInput"><input id="phoneInput" type="tel" required onChange={this.handleOnChange} /> : Phone </label>
                                 <label className="singleInput"><input id="emailInput" type="email" required onChange={this.handleOnChange} />: Email </label>
-                                <label className="singleInput"><input className="dateInput" required onChange={this.handleOnChange} /> : Date Requested </label>
+                                <label className="singleInput"><input id="dateInput" required onChange={this.handleOnChange} /> : Date Requested </label>
                             </div>
                             <div className="selectionFlex">
-                                <label className="mmDemo"><input id="mmdBox" type="checkbox" required onChange={this.handleOnChange} /> : Mountian Man Demo </label>
+                                <label className="mmDemo"><input id="mmdBox" type="checkbox" required onChange={this.handleOnChange} /> : Mountain Man Demo </label>
                                 <label className="aofl"><input id="aoflBox" type="checkbox" required onChange={this.handleOnChange} /> : Arrow Of Light</label>
-                                <div className="selectQty">
-                                    <Select id="arrowsQty" onChange={this.handleOnChange} /> <label className="qtylabel">: Hand Made Arrows</label>
-                                    <Select id="boysQty" onChange={this.handleOnChange} /> <label className="qtylabel">: Number of Boys</label>
+                                <div className="selectFlex">
+                                    <div className="selectQty">
+                                        <Select selectId="arrowsQty" onChange={this.handleOnChange} /> <label className="qtylabel">: Hand Made Arrows</label>
+                                    </div>
+                                    <div className="selectQty">
+                                        <Select selectId="boysQty" onChange={this.handleOnChange} /> <label className="qtylabel">: Number of Boys</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
                         <div className="commentBoxFlex">
                             <p>{'(If ordering arrows, please type in the boys names in the comment box below, exactly as you want it on the arrows)'}</p>
-                            <textarea className="commentBox" placeholder="Comments/Notes" />
+                            <textarea id="commentInput" onChange={this.handleOnChange} className="commentBox" placeholder="Comments/Notes" />
                         </div>
 
                         <input className="btn" onClick={this.handleOnClick} type="submit" value="Submit Request" />
@@ -272,7 +276,7 @@ export default class Scheduler extends Component {
                         this.setState({ password: e.target.value })
                     }} /></label><button onClick={this.validatePass}>ENTER</button>
                 </div>
-            </div>
+            </div >
         )
     }
 }
