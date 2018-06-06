@@ -19,8 +19,8 @@ app.use((req, res, next) => {
 })
 
 app.get('/scheduleRequest', async (req, res) => {
-    const apppointment = await appointmentCollection.find({})
-    res.send(scheduleRequest)
+    const appointment = await appointmentCollection.find({})
+    res.send(appointment)
 })
 
 app.post('/scheduleRequest', async (req, res) => {

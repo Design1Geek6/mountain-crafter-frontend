@@ -5,12 +5,9 @@ import Appointments from './Pages/Appointments'
 import './css/App.css'
 
 class App extends Component {
-state = {
-  appointment: []
-}
-
-
-
+  state = {
+    appointment: []
+  }
 
   render() {
     return (

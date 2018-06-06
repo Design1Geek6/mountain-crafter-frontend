@@ -4,17 +4,39 @@ import Select from '../Form/Select'
 
 export default class Appointments extends Component {
 
-    getAppointmentRequest = async () => {
+    getRequests = async () => {
         try {
             const response = await fetch('http://localhost:3001/scheduleRequest')
-            const appointment = await response.json()
-            this.setState({ appointment })
+            const appointments = await response.json()
+            this.setState({ appointments })
 
         } catch (error) {
             this.setState({ errorMessage: error })
         }
     }
 
+    componentDidMount() {
+        this.getRequests()
+    }
+
+    renderRequests = () => {
+        return this.appointments.map((request, i) => {
+            let button = {
+                name: this.state.newAppointmentName,
+                date: this.state.newAppointmentDate,
+                phone: this.state.newAppointmentPhone
+
+            }
+        })
+    }
+
+    clickHandler = (getInfo) => {
+        const id = getInfo.target.id,
+            selectedAppointment = this.appointments.reduce((a, c) => {
+                if (c._id === id)
+                    return c
+            }, null)
+    }
 
 
     render() {
@@ -23,7 +45,7 @@ export default class Appointments extends Component {
                 <div className="appointments">
                     <section className="allRequests">
                         <h1>Appointment Requests</h1>
-                        <div className="requestSelect">1 Request: Tyler, 06/15/18</div>
+                        <div className="requestSelect">{this.appointments}</div>
                     </section>
 
                     <section className="updateRequest">

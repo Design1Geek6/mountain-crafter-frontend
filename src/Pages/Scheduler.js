@@ -171,8 +171,8 @@ export default class Scheduler extends Component {
     }
 
     handleSubmit = (alertMsg) => {
-        alert( 'Schedule request has been receieved. We will contact you in the next couple of days. Thank you!')
-        
+        alert('Schedule request has been receieved. We will contact you in the next couple of days. Thank you!')
+
     }
 
     createAppointmentRequest = (appointmentToSave) => {
