@@ -353,3 +353,21 @@ margin-top: 5px;
   border-style: solid;
   border-color: #777
 }
+
+.btnInfo{
+  padding: 10px;
+  margin: px;
+  border: none;
+  background-color: white;
+}
+
+.requestSelect{
+display: flex;
+flex-direction: column;
+padding: 5px;
+margin: 10px;
+}
+
+button, .btn{
+  cursor: pointer;
+}

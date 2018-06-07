@@ -162,10 +162,10 @@ export default class Scheduler extends Component {
             phone: this.state.newAppointmentPhone,
             email: this.state.newAppointmentEmail,
             date: this.state.newAppointmentDate,
-            checkboxMmd: this.state.newAppointmentMmd,
+            checkBoxMmd: this.state.newAppointmentMmd,
             checkBoxAofl: this.state.newAppointmentAofl,
             selectArrowsQty: this.state.newAppointmentArrows,
-            selectBoysQty: this.state.newAppointmentBoys,
+            selectScoutQty: this.state.newAppointmentBoys,
             notes: this.state.newAppointmentComment
         })
     }
@@ -244,7 +244,7 @@ export default class Scheduler extends Component {
                                 <label className="singleInput"> <input id="nameInput" type="text" required onChange={this.handleOnChange} />: Name </label>
                                 <label className="singleInput"><input id="phoneInput" type="tel" required onChange={this.handleOnChange} /> : Phone </label>
                                 <label className="singleInput"><input id="emailInput" type="email" required onChange={this.handleOnChange} />: Email </label>
-                                <label className="singleInput"><input id="dateInput" required onChange={this.handleOnChange} /> : Date Requested </label>
+                                <label className="singleInput"><input id="dateInput" required onChange={this.handleOnChange} /> : Date Requesting </label>
                             </div>
                             <div className="selectionFlex">
                                 <label className="mmDemo"><input id="mmdBox" type="checkbox" required onChange={this.handleOnChange} /> : Mountain Man Demo </label>
@@ -254,14 +254,14 @@ export default class Scheduler extends Component {
                                         <Select selectId="arrowsQty" onChange={this.handleOnChange} /> <label className="qtylabel">: Hand Made Arrows</label>
                                     </div>
                                     <div className="selectQty">
-                                        <Select selectId="boysQty" onChange={this.handleOnChange} /> <label className="qtylabel">: Number of Boys</label>
+                                        <Select selectId="boysQty" onChange={this.handleOnChange} /> <label className="qtylabel">: Number of Scouts</label>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <div className="commentBoxFlex">
-                            <p>{'(If ordering arrows, please type in the boys names in the comment box below, exactly as you want it on the arrows)'}</p>
+                            <p>{'(If ordering arrows, please type in the Scouts full names in the comment box below, exactly as you want it on the arrows)'}</p>
                             <textarea id="commentInput" onChange={this.handleOnChange} className="commentBox" placeholder="Comments/Notes" />
                         </div>
 

@@ -4,6 +4,11 @@ import Select from '../Form/Select'
 
 export default class Appointments extends Component {
 
+    state = {
+        appointments: [],
+        selectedAppointment: {}
+    }
+
     getRequests = async () => {
         try {
             const response = await fetch('http://localhost:3001/scheduleRequest')
@@ -20,24 +25,21 @@ export default class Appointments extends Component {
     }
 
     renderRequests = () => {
-        return this.appointments.map((request, i) => {
-            let button = {
-                name: this.state.newAppointmentName,
-                date: this.state.newAppointmentDate,
-                phone: this.state.newAppointmentPhone
-
-            }
+        return this.state.appointments.map((request) => {
+            return (<button key={request._id} className="btnInfo" onClick={this.handleSelectedOnChange} id={request._id} >{request.name}, {request.phone}, {request.date}</button>)
         })
     }
 
-    clickHandler = (getInfo) => {
-        const id = getInfo.target.id,
-            selectedAppointment = this.appointments.reduce((a, c) => {
-                if (c._id === id)
-                    return c
-            }, null)
+    handleSelectedOnChange = (event) => {
+        const selectedAppointment = this.state.appointments.reduce((acc, cv) => {
+            if (cv._id === event.target.id)
+                return cv
+            return acc
+        }, null)
+        this.setState({
+            selectedAppointment
+        })
     }
-
 
     render() {
         return (
@@ -45,7 +47,7 @@ export default class Appointments extends Component {
                 <div className="appointments">
                     <section className="allRequests">
                         <h1>Appointment Requests</h1>
-                        <div className="requestSelect">{this.appointments}</div>
+                        <div className="requestSelect">{this.renderRequests()}</div>
                     </section>
 
                     <section className="updateRequest">
@@ -54,26 +56,26 @@ export default class Appointments extends Component {
                         <form className="updateForm">
                             <div className="appFormFlex">
                                 <div className="singleInputFlex">
-                                    <label className="singleInput"> <input id="nameUpdate" type="text" required />: Name </label>
-                                    <label className="singleInput"><input id="phoneUpdate" type="number" required /> : Phone </label>
-                                    <label className="singleInput"><input id="emailUpdate" type="email" required />: Email </label>
-                                    <label className="singleInput"><input className="dateUpdate" required /> : Date Requested </label>
+                                    <label className="singleInput"> <input id="nameUpdate" value={this.state.selectedAppointment.name} type="text" required />: Name </label>
+                                    <label className="singleInput"><input id="phoneUpdate" value={this.state.selectedAppointment.phone} type="tel" required /> : Phone </label>
+                                    <label className="singleInput"><input id="emailUpdate" value={this.state.selectedAppointment.email} type="email" required />: Email </label>
+                                    <label className="singleInput"><input className="dateUpdate" value={this.state.selectedAppointment.date} required /> : Date Requested </label>
                                 </div>
                                 <div className="selectionFlex">
-                                    <label className="mmDemo"><input id="mmdBox" type="checkbox" required /> : Arrow Of Light</label>
-                                    <label className="aofl"><input id="aoflBox" type="checkbox" required /> : Mountain Man Demo </label>
+                                    <label className="mmDemo"><input id="mmdBox" value={this.state.selectedAppointment.checkBoxMmd} type="checkbox" required /> : Arrow Of Light</label>
+                                    <label className="aofl"><input id="aoflBox" value={this.state.selectedAppointment.checkBoxAofl} type="checkbox" required /> : Mountain Man Demo </label>
                                     <div className="selectFlex">
                                         <div className="selectQty">
-                                            <Select id="arrowQty" /> <label className="qtylabel">: Hand Made Arrows</label>
+                                            <Select id="arrowQty" value={this.state.selectedAppointment.selectedArrowQty} /> <label className="qtylabel">: Hand Made Arrows</label>
                                         </div>
                                         <div className="selectQty">
-                                            <Select id="boysQty" /> <label className="qtylabel">: Number of Boys</label>
+                                            <Select id="boysQty" value={this.state.selectedAppointment.selectedScoutQty} /> <label className="qtylabel">: Number of Boys</label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div className="commentBoxFlex">
-                                <textarea className="commentBox" placeholder="Comments/Notes" />
+                                <textarea className="commentBox" value={this.state.selectedAppointment.notes} placeholder="Comments/Notes" />
                             </div>
 
                             <div className="btnFlex">
