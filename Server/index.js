@@ -26,13 +26,27 @@ app.get('/scheduleRequest', async (req, res) => {
 app.post('/scheduleRequest', async (req, res) => {
     try {
         const newAppointment = req.body
-        console.log('request recived')
         const savedAppointment = await appointmentCollection.insert(newAppointment)
-        console.log('saved Appointment')
         res.send(savedAppointment)
     } catch (err) {
         console.log('OOPS! Somthing Went Wrong', err)
     }
+})
+
+app.put('/scheduleRequest', async (req, res) => {
+    try {
+        const updateAppointment = req.body
+        const saveUpdateAppointment = await appointmentCollection.update(updateAppointment._id, updateAppointment)
+        res.send(saveUpdateAppointment)
+    } catch (err) {
+        console.log('Sorry :( something went wrong', err)
+    }
+})
+
+app.delete('/scheduleRequest', async (req, res) => {
+    const deleteAppointment = req.body
+    const deleted = await appointmentCollection.remove(deleteAppointment._id)
+    res.send(deleted)
 })
 
 app.listen(3001, () => console.log('running on port 3001'))

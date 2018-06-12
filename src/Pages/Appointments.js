@@ -9,6 +9,8 @@ export default class Appointments extends Component {
         selectedAppointment: {}
     }
 
+    // request
+
     getRequests = async () => {
         try {
             const response = await fetch('http://localhost:3001/scheduleRequest')
@@ -41,7 +43,146 @@ export default class Appointments extends Component {
         })
     }
 
+    handleOnChange = (event) => {
+        event.persist()
+        console.log('handel on change')
+        if (event.target.id === "nameInput") {
+            this.setState((prev) => {
+                return {
+                    selectedAppointment: {
+                        ...prev.selectedAppointment,
+                        name: event.target.value
+                    }
+                }
+            })
+        } else if (event.target.id === "phoneInput") {
+            this.setState((prev) => {
+                return {
+                    selectedAppointment: {
+                        ...prev.selectedAppointment,
+                        phone: event.target.value
+                    }
+                }
+            })
+        } else if (event.target.id === "emailInput") {
+            this.setState((prev) => {
+                return {
+                    selectedAppointment: {
+                        ...prev.selectedAppointment,
+                        email: event.target.value
+                    }
+                }
+            })
+
+        } else if (event.target.id === "dateInput") {
+            this.setState((prev) => {
+                return {
+                    selectedAppointment: {
+                        ...prev.selectedAppointment,
+                        date: event.target.value
+                    }
+                }
+            })
+        } else if (event.target.id === "mmdBox") {
+            this.setState((prev) => {
+                return {
+                    selectedAppointment: {
+                        ...prev.selectedAppointment,
+                        checkBoxMmd: event.target.checked
+                    }
+                }
+            })
+        } else if (event.target.id === "aoflBox") {
+            this.setState((prev) => {
+                return {
+                    selectedAppointment: {
+                        ...prev.selectedAppointment,
+                        checkBoxAofl: event.target.checked
+                    }
+                }
+            })
+        } else if (event.target.id === "arrowsQty") {
+            this.setState((prev) => {
+                return {
+                    selectedAppointment: {
+                        ...prev.selectedAppointment,
+                        selectArrowsQty: event.target.value
+                    }
+
+                }
+            })
+
+        } else if (event.target.id === "boysQty") {
+            this.setState((prev) => {
+                return {
+                    selectedAppointment: {
+                        ...prev.selectedAppointment,
+                        selectScoutQty: event.target.value
+                    }
+                }
+            })
+        } else if (event.target.id === "commentInput") {
+            this.setState((prev) => {
+                return {
+                    selectedAppointment: {
+                        ...prev.selectedAppointment,
+                        notes: event.target.value
+                    }
+                }
+            })
+        }
+    }
+
+    //update
+
+    handleUpdateOnClick = (updateAppointmentRequest) => {
+        this.updateAppointmentRequest(
+            this.state.selectedAppointment
+        )
+    }
+
+    updateAppointmentRequest = (appointmentToUpdate) => {
+        const postInit = {
+            method: 'put',
+            mode: 'cors',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(appointmentToUpdate)
+        }
+
+        fetch('http://localhost:3001/scheduleRequest', postInit)
+            .then((resp) => {
+                console.log(resp)
+            })
+        console.log('function Put')
+    }
+
+    //delete
+    handleDeleteOnClick = (deleteAppointmentRequest) => {
+        this.deleteAppointmentRequest(
+            this.state.selectedAppointment
+        )
+    }
+
+    deleteAppointmentRequest = (appointmentToDelete) => {
+        const postInit = {
+            method: 'delete',
+            mode: 'cors',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(appointmentToDelete)
+        }
+        fetch('http://localhost:3001/scheduleRequest', postInit)
+            .then((resp) => {
+                this.setState({})
+            })
+        console.log('function delete')
+    }
+
     render() {
+        console.log(this.state, 'state')
         return (
             <div>
                 <div className="appointments">
@@ -56,31 +197,31 @@ export default class Appointments extends Component {
                         <form className="updateForm">
                             <div className="appFormFlex">
                                 <div className="singleInputFlex">
-                                    <label className="singleInput"> <input id="nameUpdate" value={this.state.selectedAppointment.name} type="text" required />: Name </label>
-                                    <label className="singleInput"><input id="phoneUpdate" value={this.state.selectedAppointment.phone} type="tel" required /> : Phone </label>
-                                    <label className="singleInput"><input id="emailUpdate" value={this.state.selectedAppointment.email} type="email" required />: Email </label>
-                                    <label className="singleInput"><input className="dateUpdate" value={this.state.selectedAppointment.date} required /> : Date Requested </label>
+                                    <label className="singleInput"> <input id="nameInput" onChange={this.handleOnChange} value={this.state.selectedAppointment.name} type="text" />: Name </label>
+                                    <label className="singleInput"><input id="phoneInput" onChange={this.handleOnChange} value={this.state.selectedAppointment.phone} type="tel" /> : Phone </label>
+                                    <label className="singleInput"><input id="emailInput" onChange={this.handleOnChange} value={this.state.selectedAppointment.email} type="email" />: Email </label>
+                                    <label className="singleInput"><input id="dateInput" onChange={this.handleOnChange} value={this.state.selectedAppointment.date} /> : Date Requested </label>
                                 </div>
                                 <div className="selectionFlex">
-                                    <label className="mmDemo"><input id="mmdBox" value={this.state.selectedAppointment.checkBoxMmd} type="checkbox" required /> : Arrow Of Light</label>
-                                    <label className="aofl"><input id="aoflBox" value={this.state.selectedAppointment.checkBoxAofl} type="checkbox" required /> : Mountain Man Demo </label>
+                                    <label className="mmDemo"><input id="mmdBox" onChange={this.handleOnChange} checked={this.state.selectedAppointment.checkBoxMmd} type="checkbox" /> : Arrow Of Light</label>
+                                    <label className="aofl"><input id="aoflBox" onChange={this.handleOnChange} checked={this.state.selectedAppointment.checkBoxAofl} type="checkbox" /> : Mountain Man Demo </label>
                                     <div className="selectFlex">
                                         <div className="selectQty">
-                                            <Select id="arrowQty" value={this.state.selectedAppointment.selectedArrowQty} /> <label className="qtylabel">: Hand Made Arrows</label>
+                                            <Select selectId="arrowsQty" onChange={this.handleOnChange} v={this.state.selectedAppointment.selectArrowsQty} /> <label className="qtylabel">: Hand Made Arrows</label>
                                         </div>
                                         <div className="selectQty">
-                                            <Select id="boysQty" value={this.state.selectedAppointment.selectedScoutQty} /> <label className="qtylabel">: Number of Boys</label>
+                                            <Select selectId="boysQty" onChange={this.handleOnChange} v={this.state.selectedAppointment.selectScoutQty} /> <label className="qtylabel">: Number of Scouts</label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div className="commentBoxFlex">
-                                <textarea className="commentBox" value={this.state.selectedAppointment.notes} placeholder="Comments/Notes" />
+                                <textarea className="commentBox" id="commentInput" onChange={this.handleOnChange} value={this.state.selectedAppointment.notes} />
                             </div>
 
                             <div className="btnFlex">
-                                <input className="btn" onClick={this.handleOnClick} type="submit" value="Update Approval" />
-                                <input className="btn" onClick={this.handleOnClick} type="submit" value="Delete Request" />
+                                <input className="btn" onClick={this.handleUpdateOnClick} type="submit" value="Update Approval" />
+                                <input className="btn" onClick={this.handleDeleteOnClick} type="submit" value="Delete Request" />
                             </div>
 
                         </form>

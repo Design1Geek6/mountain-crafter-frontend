@@ -12,10 +12,10 @@ export default class Select extends Component {
             let theOptions = option.map((key) =>{
                 return <option value={key}>{key}</option>
             })
-
+console.log(this.props.v, 'so you know what it is')
             return (
                 <div>
-                    <select id={this.props.selectId} onChange={this.props.onChange} name="">
+                    <select id={this.props.selectId} value={this.props.v} onChange={this.props.onChange} name="">
                         {theOptions}
                     </select>
                 </div>

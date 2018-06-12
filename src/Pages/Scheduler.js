@@ -135,11 +135,11 @@ export default class Scheduler extends Component {
             })
         } else if (event.target.id === "mmdBox") {
             this.setState({
-                newAppointmentMmd: event.target.value
+                newAppointmentMmd: event.target.checked
             })
         } else if (event.target.id === "aoflBox") {
             this.setState({
-                newAppointmentAofl: event.target.value
+                newAppointmentAofl: event.target.checked
             })
         } else if (event.target.id === "arrowsQty") {
             this.setState({
@@ -174,6 +174,8 @@ export default class Scheduler extends Component {
         alert('Schedule request has been receieved. We will contact you in the next couple of days. Thank you!')
 
     }
+
+    //post
 
     createAppointmentRequest = (appointmentToSave) => {
         const postInit = {
@@ -247,8 +249,8 @@ export default class Scheduler extends Component {
                                 <label className="singleInput"><input id="dateInput" required onChange={this.handleOnChange} /> : Date Requesting </label>
                             </div>
                             <div className="selectionFlex">
-                                <label className="mmDemo"><input id="mmdBox" type="checkbox" required onChange={this.handleOnChange} /> : Mountain Man Demo </label>
-                                <label className="aofl"><input id="aoflBox" type="checkbox" required onChange={this.handleOnChange} /> : Arrow Of Light</label>
+                                <label className="aofl"><input id="aoflBox" type="checkbox" onChange={this.handleOnChange} /> : Arrow Of Light</label>
+                                <label className="mmDemo"><input id="mmdBox" type="checkbox" onChange={this.handleOnChange} /> : Mountain Man Demo </label>
                                 <div className="selectFlex">
                                     <div className="selectQty">
                                         <Select selectId="arrowsQty" onChange={this.handleOnChange} /> <label className="qtylabel">: Hand Made Arrows</label>

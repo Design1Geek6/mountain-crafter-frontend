@@ -359,6 +359,8 @@ margin-top: 5px;
   margin: px;
   border: none;
   background-color: white;
+  display: flex;
+  justify-content: flex-start;
 }
 
 .requestSelect{
@@ -370,4 +372,5 @@ margin: 10px;
 
 button, .btn{
   cursor: pointer;
+
 }
