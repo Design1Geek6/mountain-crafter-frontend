@@ -222,14 +222,15 @@ export default class Appointments extends Component {
                             <div className="btnFlex">
                                 <input className="btn" onClick={this.handleUpdateOnClick} type="submit" value="Update Approval" />
                                 <input className="btn" onClick={this.handleDeleteOnClick} type="submit" value="Delete Request" />
+                                <div className='schedLink'>
+                                    <Link to="/">View Calendar</Link>
+                                </div>
+
                             </div>
 
                         </form>
 
                     </section>
-                </div>
-                <div className='link schedLink'>
-                    <Link to="/">View Calendar</Link>
                 </div>
 
             </div>
