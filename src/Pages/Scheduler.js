@@ -276,7 +276,7 @@ export default class Scheduler extends Component {
                 <div className='link appointLink'>
                     <label>Administrator Login:<input id="password" type="password" onChange={(e) => {
                         this.setState({ password: e.target.value })
-                    }} /></label><button onClick={this.validatePass}>ENTER</button>
+                    }} /></label><button type='submit' onClick={this.validatePass}>ENTER</button>
                 </div>
             </div >
         )

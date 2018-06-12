@@ -4,22 +4,22 @@ import React, { Component } from 'react'
 export default class Select extends Component {
     render() {
 
-            let option = []
-            for (let i = 0; i <= 15; i++){
-                option.push(i)
-            }
+        let option = []
+        for (let i = 0; i <= 15; i++) {
+            option.push(i)
+        }
 
-            let theOptions = option.map((key) =>{
-                return <option value={key}>{key}</option>
-            })
-console.log(this.props.v, 'so you know what it is')
-            return (
-                <div>
-                    <select id={this.props.selectId} value={this.props.v} onChange={this.props.onChange} name="">
-                        {theOptions}
-                    </select>
-                </div>
-            )
-}
+        let theOptions = option.map((key) => {
+            return <option value={key}>{key}</option>
+        })
+
+        return (
+            <div>
+                <select id={this.props.selectId} value={this.props.v} onChange={this.props.onChange} name="">
+                    {theOptions}
+                </select>
+            </div>
+        )
+    }
 }
 
