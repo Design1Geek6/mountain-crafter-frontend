@@ -216,7 +216,7 @@ export default class Scheduler extends Component {
                     <h1 className="schedTitle">Schedule Appointment</h1>
                     <p>Check date availability on calendar, find availabel date, then request sevice on chosen date with form below.</p>
                     <div className="calContainer">
-                        <div className="calendar">
+                        <div className="calendar effect2">
                             {this.renderHeader()}
                             {this.renderDays()}
                             {this.renderCells()}

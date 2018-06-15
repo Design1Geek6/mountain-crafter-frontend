@@ -116,13 +116,64 @@ main {
 
 /* Calendar */
 
+
+
 .calendar {
   display: block;
   position: relative;
   width: 50%;
   background: var(--neutral-color);
-  border: 1px solid var(--border-color);
+  border: 1px solid lightblue;
 }
+
+.effect2
+{
+  position: relative;
+}
+
+.effect2:after{
+  transform: rotate(2deg);
+  right: 5px;
+  left: auto;
+}
+
+.effect2:before{
+  position:absolute;
+  content:"";
+  width:95%;
+  top:140px;
+  bottom:15px;
+  left:15px;
+  background-color:rgb(124, 124, 124);
+  z-index:-1;
+  box-shadow: 0 20px 35px 0 rgb(124, 124, 124);
+  transform:rotate(-2deg);
+}
+
+/* .effect2
+{
+  position: relative;
+}
+.effect2:before, .effect2:after
+{
+  z-index: -1;
+  position: absolute;
+  content: "";
+  bottom: 20px;
+  left: 5px;
+  width: 50%;
+  top: 90%;
+  max-width:300px;
+  background: #555;
+  box-shadow: 0 20px 50px #555;
+  transform: rotate(-3deg);
+}
+.effect2:after
+{
+  transform: rotate(3deg);
+  right: 5px;
+  left: auto;
+} */
 
 .calendar .header {
   text-transform: uppercase;
@@ -153,8 +204,8 @@ main {
 
 .calendar .days {
   text-transform: uppercase;
-  font-weight: 400;
-  color: var(--text-color-light);
+  font-weight: 600;
+  color: #1a8fff;
   font-size: 70%;
   padding: .75em 0;
   border-bottom: 1px solid var(--border-color);
@@ -234,6 +285,8 @@ main {
 .calContainer{
   display: flex;
   justify-content: center;
+padding-top: 20px;
+padding-bottom: 20px;
 }
 
 /* form and misc Styling*/
